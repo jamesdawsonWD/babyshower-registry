@@ -1,0 +1,75 @@
+<div id="wishlist-container">
+  {{#if items.length}}
+    <ul class="flex flex-col gap-6">
+      {{#each items}}
+        <li
+          class="bg-gray-50 p-4 flex gap-4 rounded-md shadow-sm border border-gray-200"
+        >
+          <img
+            src="{{this.image}}"
+            class="w-[150px] h-[150px] aspect-square rounded-md"
+          />
+          <div class="flex flex-col items-start w-full justify-start">
+            <h3
+              class="font-semibold text-zinc-800 !text-left"
+            >{{this.name}}</h3>
+            <p
+              class="text-zinc-800 text-base !text-left"
+            >{{this.description}}</p>
+            <div class="flex justify-between items-center space-x-2 mt-4 w-full">
+              <div class="flex  space-x-2">
+
+              <!-- View Product -->
+              <a
+                href="{{this.url}}"
+                target="_blank"
+                class="bg-zinc-100 hover:bg-zinc-200 hover:text-zinc-900 text-zinc-800 border-zinc-300 shadow-sm hover:border-zinc-400 py-2 px-4 rounded-md min-w-40"
+              >
+                View product
+              </a>
+            
+              {{#if ../isWishlistOwner}}                
+              <!-- Edit Item -->
+                <button
+                  hx-get="/htmx/ui/{{wishlistId}}/{{this.id}}/edit-item-modal"
+                   hx-target="#modalContainer"
+                  hx-swap="innerHTML"
+                  class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md"
+                >
+                  Edit
+                </button>
+                <!-- Delete Item -->
+                <button
+                  hx-delete="/wishlist/{{wishlistId}}/items/{{this.id}}"
+                  hx-target="#wishlist-container"
+                  hx-swap="innerHTML"
+                  class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md"
+                >
+                  Delete
+                </button>
+              {{/if}}
+              </div>
+  <!-- Gift Item -->
+              <button
+                hx-post="/wishlist/{{wishlistId}}/items/{{this.id}}/gift"
+                hx-target="this"
+                hx-swap="outerHTML"
+                class="{{ternary
+                    this.giftedById
+                    'bg-zinc-500 hover:bg-zinc-600'
+                    'bg-blue-500 hover:bg-blue-600 text-white'
+                  }}
+                  py-1 px-3 rounded-md justify-self-end"
+              >
+                {{ternary this.giftedById "Undo gift selection" "Gift Item"}}
+              </button>
+            </div>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="text-zinc-800 text-base mt-16">No items added yet. Start adding
+      some!</p>
+  {{/if}}
+</div>

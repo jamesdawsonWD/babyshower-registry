@@ -1,0 +1,68 @@
+<header
+  class="text-white bg-white/30 flex items-center justify-between w-screen fixed top-0 px-8 py-4 mx-auto z-50"
+>
+  <!-- Logo or Title -->
+  <a
+    href="/"
+    hx-target="#app"
+    hx-push-url="/"
+    hx-get="/htmx/landing-page"
+    class="text-xl font-semibold text-zinc-900"
+    role="link"
+    aria-label="Go to BumpBump landing page"
+  >
+    BumpBump
+  </a>
+  <!-- User Info or Login Button -->
+  <div class="flex gap-2 items-center">
+
+    {{#if loggedIn}}
+      <div
+        class="flex gap-2 px-4 py-2 rounded-lg items-center border-zinc-100 bg-zinc-50"
+      >
+        <span class="text-zinc-900">Hello, {{username}}</span>
+        <a
+          hx-post="/api/auth/logout"
+          hx-target="#app"
+          class="text-zinc-400 text-sm hover:cursor-pointer"
+        >Logout?</a></div>
+      <a
+        href="/wishlists"
+        hx-target="#app"
+        hx-push-url="/wishlists"
+        hx-get="/htmx/wishlists"
+        class="hover:bg-zinc-100 bg-zinc-50 !text-zinc-900 py-2 px-4 rounded hover:cursor-pointer transition-all"
+      >
+        Your wishlists
+      </a>
+
+      <a
+        hx-target="#app"
+        hx-push-url="/create"
+        hx-get="/htmx/create"
+        class="bg-blue-500 hover:bg-blue-600 !text-white py-2 px-4 rounded shadow hover:cursor-pointer transition-all"
+      >
+        Create
+      </a>
+
+    {{else}}
+      <a
+        hx-target="#app"
+        hx-push-url="/login"
+        hx-get="/htmx/login"
+        class="hover:bg-zinc-100 bg-zinc-50 !text-zinc-900 py-2 px-4 rounded shadow hover:cursor-pointer"
+      >
+        Login
+      </a>
+      <a
+        hx-target="#app"
+        hx-push-url="/signup"
+        hx-get="/htmx/signup"
+        class="bg-blue-500 hover:bg-blue-600 !text-zinc-100 py-2 px-4 rounded shadow hover:cursor-pointer"
+      >
+        Signup
+      </a>
+    {{/if}}
+
+  </div>
+</header>

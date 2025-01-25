@@ -1,0 +1,60 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Title -->
+  <div class="w-full flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-semibold text-zinc-800">Your Wishlists</h1>
+  <!-- Create New Wishlist -->
+      <button
+        type="submit"
+        hx-get="/htmx/create"
+            hx-swap="innerHTML"
+
+          hx-target="#modalContainer"
+        class=" bg-zinc-100 hover:bg-zinc-50 text-zinc-900 border-zinc-200 shadow-md hover:shadow-none hover:border-zinc-300 py-2 px-4 rounded-md  min-w-40 transition-all"
+      >
+        Create wishlist
+      </button>
+  </div>
+
+  <!-- Wishlists -->
+  {{#if wishlists.length}}
+    <ul class=" space-y-4">
+      {{#each wishlists}}
+        <li class="p-6 flex justify-between rounded-lg border bg-white shadow-md border-zinc-200 items-start overflow-hidden relative flex-col">
+
+              <h2 class="text-2xl font-semibold text-zinc-800">{{this.name}}</h1>
+              <span
+                class="{{#if (eq this.lookingForGifts "BOYS")}}bg-blue-300{{/if}}
+                  {{#if (eq this.lookingForGifts "GIRLS")}}bg-pink-300{{/if}}
+                  {{#if (eq this.lookingForGifts "GENDER_NEUTRAL")}}bg-yellow-300{{/if}} px-4 py-2 w-[400px] h-[400px] rounded-full -right-20 -top-24 shadow-inner absolute  text-zinc-900 flex flex-col items-center justify-center"
+              >
+                <span class="text-sinc-600">Gifts for:</span>
+                <span class="font-semibold text-2xl ">
+                  {{#if (eq this.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
+                  {{#if (eq this.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
+                  {{#if (eq this.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
+                </span>
+
+              </span>
+            <p class="text-zinc-900 w-full text-left text-base max-w-[600px]">{{this.description}}</p>
+            <div class="flex gap-2">
+            <!-- View Wishlist -->
+            <a
+              href="/wishlist/{{this.id}}"
+              hx-target="#app"
+              hx-push-url="/wishlist/{{this.id}}"
+              hx-get="/htmx/wishlist/{{this.id}}"
+              class="bg-zinc-800 hover:bg-zinc-900 hover:text-zinc-50 text-white py-1 px-3 rounded-md"
+            >
+              View
+            </a>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="text-zinc-800 py-20">You have no wishlists yet. Create one below to get
+      started!</p>
+  {{/if}}
+
+  
+</div>

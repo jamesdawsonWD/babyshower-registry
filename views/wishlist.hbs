@@ -1,0 +1,86 @@
+  {{#if isWishlistOwner}}
+  <div class="flex items-start justify-between mb-4 w-full max-w-4xl gap-4 mx-auto">
+
+    <a
+      href="/wishlists"
+      hx-target="#app"
+      hx-push-url="/wishlists"
+      hx-get="/htmx/wishlists"
+      class="hover:bg-zinc-100 text-blue-500 py-2 px-4 rounded-md col-span-3"
+    >
+      Back to Wishlists
+    </a>
+    <div class="flex gap-2 items-center">
+
+      <button
+      hx-get="/htmx/ui/{{wishlistId}}/{{this.id}}/edit-item-modal"
+        hx-target="#modalContainer"
+      hx-swap="innerHTML"
+      class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md"
+    >
+      Edit
+    </button>
+    <!-- Delete Item -->
+    <button
+      hx-delete="/wishlist/{{wishlistId}}/items/{{this.id}}"
+      hx-target="#wishlist-container"
+      hx-swap="innerHTML"
+      class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md"
+    >
+      Delete
+    </button>
+    <button class="text-zinc-800  px-3 rounded-md bg-zinc-100 hover:bg-zinc-200 hover:border-zinc-500"
+          hx-get="/htmx/ui/{{wishlist.id}}/share-wishlist-modal"
+          hx-swap="innerHTML"
+          hx-target="#modalContainer">
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 22q-1.25 0-2.125-.875T14 19q0-.15.075-.7L7.05 14.2q-.4.375-.925.588T5 15q-1.25 0-2.125-.875T2 12t.875-2.125T5 9q.6 0 1.125.213t.925.587l7.025-4.1q-.05-.175-.062-.337T14 5q0-1.25.875-2.125T17 2t2.125.875T20 5t-.875 2.125T17 8q-.6 0-1.125-.213T14.95 7.2l-7.025 4.1q.05.175.063.338T8 12t-.012.363t-.063.337l7.025 4.1q.4-.375.925-.587T17 16q1.25 0 2.125.875T20 19t-.875 2.125T17 22m0-2q.425 0 .713-.287T18 19t-.288-.712T17 18t-.712.288T16 19t.288.713T17 20M5 13q.425 0 .713-.288T6 12t-.288-.712T5 11t-.712.288T4 12t.288.713T5 13m12-7q.425 0 .713-.288T18 5t-.288-.712T17 4t-.712.288T16 5t.288.713T17 6m0-1"/></svg>
+    </button>
+    </div>
+
+  </div>
+  {{/if}}
+<div class="grid grid-cols-12 w-full max-w-4xl gap-4 mx-auto">
+  <div class="w-full p-8 bg-white rounded-lg shadow-md col-span-12 overflow-hidden">
+    <!-- Header Section -->
+    <header class="flex flex-col gap-2 ">
+      <div class="flex justify-between w-full relative ">
+
+        <h1 class="text-4xl font-bold text-zinc-800">{{wishlist.name}}</h1>
+        <span
+          class="{{#if (eq wishlist.lookingForGifts "BOYS")}}bg-blue-300{{/if}}
+            {{#if (eq wishlist.lookingForGifts "GIRLS")}}bg-pink-300{{/if}}
+            {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}bg-yellow-300{{/if}} px-4 py-2 w-[400px] h-[400px] rounded-full -right-20 -top-24 shadow-inner absolute  text-zinc-900 flex flex-col items-center justify-center"
+        >
+          <span class="text-sinc-600">Gifts for:</span>
+          <span class="font-semibold text-2xl ">
+            {{#if (eq wishlist.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
+            {{#if (eq wishlist.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
+            {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
+          </span>
+
+        </span>
+      </div>
+      <p class="text-zinc-900 w-full text-left text-base max-w-[600px]">{{wishlist.description}}</p>
+
+    </header>
+  </div>
+  <!-- Items Section -->
+  <div class="mb-8 col-span-12 w-full p-8 bg-white rounded-lg shadow-md">
+    <div class="flex justify-between w-full items-center mb-4">
+      <h2 class="text-xl font-semibold text-left text-zinc-800 w-full">Wishlist Items</h2>
+      <button
+        type="submit"
+        hx-get="/htmx/ui/{{wishlist.id}}/get-item-details-modal"
+          hx-swap="innerHTML"
+
+          hx-target="#modalContainer"
+        class=" bg-zinc-100 hover:bg-zinc-50 text-zinc-900 border-zinc-200 shadow-md hover:shadow-none hover:border-zinc-300 py-2 px-4 rounded-md  min-w-40 transition-all"
+      >
+        Add item
+      </button>
+    </div >
+    {{> wishlist-items items=wishlist.items wishlistId=wishlist.id isWishlistOwner=isWishlistOwner}}
+    </div>
+ 
+  </div>
+</div>

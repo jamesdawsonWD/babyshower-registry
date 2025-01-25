@@ -1,0 +1,53 @@
+{{! Define the button variants }}
+{{#*inline "buttonClasses"}}
+  {{#if variant}}
+    {{#eq variant "default"}}bg-primary text-primary-foreground hover:bg-primary/90{{/eq}}
+    {{#eq variant "destructive"}}bg-destructive text-destructive-foreground hover:bg-destructive/90{{/eq}}
+    {{#eq variant "outline"}}border border-input bg-background hover:bg-accent hover:text-accent-foreground{{/eq}}
+    {{#eq variant "secondary"}}bg-secondary text-secondary-foreground hover:bg-secondary/80{{/eq}}
+    {{#eq variant "ghost"}}!bg-transparent hover:bg-accent hover:text-accent-foreground{{/eq}}
+    {{#eq variant "link"}}text-primary underline-offset-4 hover:underline{{/eq}}
+  {{else}}
+    bg-primary text-primary-foreground hover:bg-primary/90 {{! Default variant }}
+  {{/if}}
+{{/inline}}
+
+<button
+  {{#if hxPost}}hx-post="{{hxPost}}"{{/if}}
+  {{#if hxGet}}hx-get="{{hxGet}}"{{/if}}
+  {{#if hxDelete}}hx-delete="{{hxDelete}}"{{/if}}
+  {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}}
+  {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}}
+  {{#if hxOn}}hx-on:htmx:before-request="{{hxOn}}"{{/if}}
+  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{> buttonClasses}} {{class}}"
+  {{#if type}}type="{{type}}"{{/if}}
+  {{#if disabled}}disabled{{/if}}
+>
+  {{#if spinner}}
+    <span id="buttonText">{{text}}</span>
+    <span id="spinner" class="hidden ml-2">
+      <svg
+        class="animate-spin h-5 w-5 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v8z"
+        ></path>
+      </svg>
+    </span>
+  {{else}}
+    {{text}}
+  {{/if}}
+</button>

@@ -1,0 +1,26 @@
+<!-- Modal Content -->
+<div class="bg-white rounded-lg shadow-lg max-w-lg w-full px-12 py-6 relative">
+  <!-- Close Button -->
+  <button
+    hx-target="#modalContainer"
+    hx-swap="outerHTML"
+    hx-get="/htmx/ui/close-modal"
+    class="absolute top-4 right-4 bg-zinc-50 text-zinc-900 hover:bg-zinc-100 hover:text-gray-600"
+  >
+    ✕
+  </button>
+
+  <div id="modalContent">
+
+    <!-- Modal Header -->
+    <h2 class="text-xl font-semibold text-zinc-800 mb-4">
+      {{title}}
+    </h2>
+
+    <!-- Modal Body -->
+    <div>
+      {{{content}}}
+      <!-- Rendered content passed into the modal -->
+    </div>
+  </div>
+</div>

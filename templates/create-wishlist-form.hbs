@@ -1,0 +1,100 @@
+
+  <form
+    hx-post="/api/wishlists"
+    hx-target="#app"
+    hx-swap="innerHTML"
+    class="space-y-6"
+  >
+    <!-- Wishlist Name -->
+    <div class="space-y-2 flex flex-col justify-start items-start">
+      <label for="name" class="block font-medium text-zinc-700">Wishlist Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        placeholder="e.g., Baby Shower Gifts"
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="space-y-2 flex flex-col justify-start items-start">
+      <label
+        for="description"
+        class="block font-medium text-zinc-700"
+      >Description</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="3"
+        placeholder="Add a description for this wishlist"
+      ></textarea>
+    </div>
+    <fieldset class="space-y-4">
+      <legend class="block font-medium text-zinc-700">What kind of gifts?</legend>
+      <div class="space-y-2">
+        <!-- Option 1 -->
+        <label
+          for="boy"
+          class="flex items-center gap-2 rounded-md border border-zinc-300 p-3 hover:bg-zinc-100 focus-within:ring-2 focus-within:ring-zinc-500"
+        >
+          <input
+            type="radio"
+            name="lookingForGifts"
+            id="boy"
+            value="BOYS"
+            checked
+            class="h-4 w-4 text-zinc-600 focus:ring-zinc-500"
+          />
+          <span
+            class="text-sm font-medium text-zinc-700 flex items-center justify-between w-full"
+          >For a Boy
+            <div class="size-2 rounded-full ml-2 bg-blue-300"></div></span>
+        </label>
+
+        <!-- Option 2 -->
+        <label
+          for="girl"
+          class="flex items-center gap-2 rounded-md border border-zinc-300 p-3 hover:bg-zinc-100 focus-within:ring-2 focus-within:ring-zinc-500"
+        >
+          <input
+            type="radio"
+            name="lookingForGifts"
+            id="girl"
+            value="GIRLS"
+            class="h-4 w-4 text-zinc-600 focus:ring-zinc-500"
+          />
+          <span
+            class="text-sm font-medium text-zinc-700 flex items-center justify-between w-full"
+          >For a Girl
+            <div class="size-2 rounded-full ml-2 bg-pink-300"></div></span>
+        </label>
+
+        <!-- Option 3 -->
+        <label
+          for="gender-neutral"
+          class="flex items-center gap-2 rounded-md border border-zinc-300 p-3 hover:bg-zinc-100 focus-within:ring-2 focus-within:ring-zinc-500"
+        >
+          <input
+            type="radio"
+            name="lookingForGifts"
+            id="gender-neutral"
+            value="GENDER_NEUTRAL"
+            class="h-4 w-4 text-zinc-600 focus:ring-zinc-500"
+          />
+          <span
+            class="text-sm font-medium text-zinc-700 flex items-center justify-between w-full"
+          >Gender Neutral
+            <div class="size-2 rounded-full ml-2 bg-yellow-200"></div></span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="block w-full bg-zinc-900 hover:bg-zinc-800 text-white py-2 px-4 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+    >
+      Create Wishlist
+    </button>
+  </form>

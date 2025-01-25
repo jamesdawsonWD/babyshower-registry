@@ -1,0 +1,26 @@
+<div class="bg-zinc-100 rounded-lg border border-zinc-300 p-6 flex flex-col justify-between {{#if selected}}!opacity-50{{/if}}">
+    <div class="flex flex-col items-center mb-8 relative">
+        <div class="image-wrapper mb-8">
+            {{#if image}}
+                <img src="{{image}}" alt="{{title}}" class="product-image aspect-square rounded-lg w-[500px] h-[500px]" />
+            {{else}}
+                <div class="no-image">No Image</div>
+            {{/if}}
+        </div>
+        <h2 class="text-zinc-900 mb-4 font-semibold">{{title}}</h2>
+        <div class="p-2 rounded-lg bg-zinc-900 absolute top-0 right-0 shadow-lg">
+            <p class="product-price text-zinc-50 font-semibold text-lg">{{price}}</p>
+        </div>
+    </div>
+    <div class="card-footer w-full flex justify-between items-center">
+        <a href="{{url}}" target="_blank" rel="noopener noreferrer" class="btn !text-zinc-900">View Product</a>
+        <button 
+            class="btn select-btn hover:!bg-zinc-800 {{#if selected}}!opacity-50{{/if}}" 
+            {{#if selected}}disabled{{/if}}
+            hx-post="http://localhost:3000/htmx/ui/modal"
+            hx-target="#modal-container"
+            hx-vals='{"id": "{{id}}"}'>
+            {{#if selected}}Selected{{else}}Select Item{{/if}}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+
+  <!-- Title -->
+  <h1 class="text-2xl font-semibold text-center text-zinc-900 mb-2">Create an
+    Account</h1>
+  <p class="text-center text-sm text-gray-500 mb-6">Sign up to get started!</p>
+
+  <!-- Signup Form -->
+  <form
+    hx-post="/api/auth/signup"
+    hx-target="#app"
+    hx-push-url="/signup"
+    class="space-y-4"
+  >
+    <!-- Error Message (only shown if errorMessage is passed) -->
+    {{#if errorMessage}}
+      <div
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-6 text-sm"
+      >
+        {{errorMessage}}
+      </div>
+    {{/if}}
+    <!-- Name Field -->
+    <div class="flex flex-col justify-start items-start">
+      <label
+        for="name"
+        class="block text-sm font-medium text-gray-700"
+      >Username</label>
+      <input
+        type="text"
+        id="name"
+        name="username"
+        placeholder="Your username"
+        required
+      />
+    </div>
+
+    <!-- Email Field -->
+    <div class="flex flex-col justify-start items-start">
+      <label for="email" class="block text-sm font-medium text-gray-700">Email
+        Address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Your email address"
+        required
+      />
+    </div>
+
+    <!-- Password Field -->
+    <div class="flex flex-col justify-start items-start">
+      <label
+        for="password"
+        class="block text-sm font-medium text-gray-700"
+      >Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        min="8"
+        placeholder="Minimum 8 characters"
+        required
+      />
+    </div>
+
+    <!-- Terms and Conditions -->
+    <div class="flex items-center">
+      <input type="checkbox" id="terms" name="terms" required />
+      <label for="terms" class="ml-2 text-sm text-gray-700">
+        I agree to the
+        <a href="/terms" class="text-blue-500 hover:underline">Terms and
+          Conditions</a>
+      </label>
+    </div>
+
+    <!-- Create Account Button -->
+    <button
+      type="submit"
+      class="w-full bg-zinc-800 hover:bg-zinc-900 text-white py-2 px-4 rounded-md shadow"
+    >
+      Create Account
+    </button>
+  </form>
+
+  <!-- Footer -->
+  <p class="text-center text-sm text-gray-500 mt-4">
+    Already have an account?
+    <a
+      hx-target="#app"
+      hx-push-url="/login"
+      hx-get="/htmx/login"
+      class="text-blue-500 hover:underline hover:cursor-pointer"
+    >Log in</a>
+  </p>
+</div>

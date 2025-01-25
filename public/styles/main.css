@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #f8fbfd;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  /* Base styles for forms */
+  form {
+    @apply space-y-6 p-6;
+  }
+
+  label {
+    @apply block font-medium text-zinc-300;
+  }
+
+  input,
+  textarea {
+    @apply w-full mt-1 px-4 py-2 bg-zinc-100 text-zinc-900 border border-zinc-200 shadow-inner rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500;
+  }
+
+  textarea {
+    @apply resize-none;
+  }
+
+  input[type="checkbox"] {
+    @apply w-5 h-5 text-blue-500 bg-zinc-800 border-zinc-700 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none;
+  }
+
+  button {
+    @apply bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded shadow focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+
+  /* Optional headings and descriptions for forms */
+  h1 {
+    @apply text-lg font-semibold text-zinc-100 mb-4;
+  }
+
+  p {
+    @apply text-sm text-zinc-400 mb-6;
+  }
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+#app {
+  margin: 0 auto;
+  margin-top: 80px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}

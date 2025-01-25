@@ -1,0 +1,38 @@
+<!-- Add Item Form -->
+<form
+  hx-post="/wishlist/{{id}}/get-item-details"
+  hx-target="#modalContent"
+  hx-swap="innerHTML"
+  class="space-y-4 px-0"
+>
+  <!-- Error Message (only shown if errorMessage is passed) -->
+  {{#if errorMessage}}
+    <div
+      class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-6 text-sm"
+    >
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
+  <!-- URL Field -->
+  <div class="flex flex-col justify-start items-start">
+    <label for="url" class="block text-sm font-medium text-gray-700">Item URL</label>
+    <input
+      type="url"
+      id="url"
+      name="url"
+      placeholder="e.g., https://example.com/item"
+      required
+      class="w-full border border-gray-300 rounded-md py-2 px-4 mt-1 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+  </div>
+
+  <!-- Add Item Button -->
+  <button
+    type="submit"
+    class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow flex items-center justify-center"
+    hx-on:htmx:before-request="this.classList.add('loading'); this.disabled = true"
+  >
+    <span id="buttonText">Get Item Details</span>
+  </button>
+</form>

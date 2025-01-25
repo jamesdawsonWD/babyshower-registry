@@ -1,0 +1,20 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <link rel="stylesheet" href="/styles/output.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <div
+      id="modalContainer"
+      class="w-screen h-screen fixed z-[9999] bg-black/50 top-0 left-0 flex items-center justify-center empty:hidden"
+    ></div>
+    {{{header}}}
+    <div id="app">
+      {{{content}}}
+    </div>
+  </body>
+</html>

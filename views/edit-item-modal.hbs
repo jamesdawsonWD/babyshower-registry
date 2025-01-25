@@ -1,0 +1,104 @@
+<form
+  hx-put="/wishlist/{{id}}/items/{{itemId}}"
+hx-target="#modalContainer"
+    hx-swap="outerHTML"
+  class="space-y-4 px-0"
+>
+  <!-- Error Message (only shown if errorMessage is passed) -->
+  {{#if errorMessage}}
+    <div
+      class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-6 text-sm"
+    >
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
+  <!-- Name Field -->
+  <div class="flex flex-col justify-start items-start">
+    <label for="name" class="block text-sm font-medium text-gray-700">Item Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="e.g., Baby Blanket"
+      value="{{name}}"
+      required
+      class="w-full border border-gray-300 rounded-md py-2 px-4 mt-1 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+  </div>
+
+  <!-- URL Field -->
+  <div class="flex flex-col justify-start items-start">
+    <label for="url" class="block text-sm font-medium text-gray-700">Item URL</label>
+    <input
+      type="url"
+      id="url"
+      name="url"
+      placeholder="e.g., https://example.com/item"
+      value="{{url}}"
+      required
+      class="w-full border border-gray-300 rounded-md py-2 px-4 mt-1 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+  </div>
+
+  <!-- Description Field -->
+  <div class="flex flex-col justify-start items-start">
+    <label
+      for="description"
+      class="block text-sm font-medium text-gray-700"
+    >Description</label>
+    <textarea
+      id="description"
+      name="description"
+      rows="4"
+      placeholder="e.g., A soft and cozy baby blanket."
+      class="w-full border border-gray-300 rounded-md py-2 px-4 mt-1 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >{{description}}</textarea>
+  </div>
+
+  <!-- Hidden Image URL Field -->
+  <input type="hidden" id="imageUrl" name="imageUrl" value="{{image}}" />
+
+  <!-- Image Preview (only if image is passed) -->
+  {{#if image}}
+    <div class="flex flex-col justify-start items-start">
+      <label class="block text-sm font-medium text-gray-700">Image</label>
+      <img
+        src="{{image}}"
+        alt="Item Image"
+        class="w-[150px] h-[150px] rounded-md border border-gray-300"
+      />
+    </div>
+  {{/if}}
+
+  <!-- Add Item Button -->
+  <button
+    type="submit"
+    class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow flex items-center justify-center"
+    hx-on:htmx:before-request="this.classList.add('loading'); this.disabled = true"
+  >
+    <span id="buttonText">Edit Item</span>
+    <span id="spinner" class="hidden ml-2">
+      <svg
+        class="animate-spin h-5 w-5 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v8z"
+        ></path>
+      </svg>
+    </span>
+  </button>
+</form>
