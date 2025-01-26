@@ -8,10 +8,8 @@
     "start": "node .output/server/index.mjs"
 
   },
-  "devDependencies": {
-    "nitropack": "latest"
-  },
   "dependencies": {
+    "nitropack": "latest",
     "@prisma/client": "^6.2.1",
     "argon2": "^0.41.1",
     "axios": "^1.7.9",

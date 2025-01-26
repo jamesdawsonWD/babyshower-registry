@@ -3,7 +3,7 @@ services:
     name: nitro-app
     env: node
     buildCommand: pnpm install && pnpm run build
-    startCommand: npm start
+    startCommand: pnpm start
     plan: free
     envVars:
       - key: NODE_ENV
