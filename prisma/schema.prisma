@@ -6,15 +6,18 @@ datasource db {
   provider = "sqlite" // SQLite for local storage
   url      = env("DATABASE_URL") // Database URL from .env
 }
+
 model User {
-  id          Int       @id @default(autoincrement()) // Unique user ID
-  email       String?   @unique                      // Optional email
-  name        String?                                // Optional name of the user
-  password    String                                 // Hashed password for email login
-  wishlists   Wishlist[]                             // Relation to wishlists created by the user
-  giftedItems Item[]    @relation("GiftedItems")     // Relation to items this user has gifted
-  createdAt   DateTime  @default(now())              // Auto-generated timestamp
-  updatedAt   DateTime  @updatedAt                   // Auto-updated timestamp
+  id               String     @id @default(uuid())       // Unique user ID as UUID
+  email            String?    @unique                   // Optional email
+  name             String?                               // Optional name of the user
+  password         String                                // Hashed password for email login
+  wishlists        Wishlist[]                            // Relation to wishlists created by the user
+  giftedItems      Item[]     @relation("GiftedItems")   // Relation to items this user has gifted
+  verificationCode String?                               // Verification code sent to the user
+  isVerified       Boolean    @default(false)           // Whether the user is verified
+  createdAt        DateTime   @default(now())            // Auto-generated timestamp
+  updatedAt        DateTime   @updatedAt                 // Auto-updated timestamp
 }
 
 enum LookingForGifts {
@@ -24,27 +27,27 @@ enum LookingForGifts {
 }
 
 model Wishlist {
-  id              Int              @id @default(autoincrement()) // Unique wishlist ID
-  name            String           // Wishlist name (e.g., "Baby Shower List")
-  description     String?          // Optional description for the wishlist
-  lookingForGifts LookingForGifts  // Enum to specify the type of gifts
-  userId          Int              // Foreign key to User
-  user            User             @relation(fields: [userId], references: [id]) // Relation to User
-  items           Item[]           // Relation to items in the wishlist
-  createdAt       DateTime         @default(now()) // Auto-generated timestamp
-  updatedAt       DateTime         @updatedAt // Auto-updated timestamp
+  id              String          @id @default(uuid()) // Unique wishlist ID as UUID
+  name            String                                  // Wishlist name (e.g., "Baby Shower List")
+  description     String?                                 // Optional description for the wishlist
+  lookingForGifts LookingForGifts                         // Enum to specify the type of gifts
+  userId          String                                  // Foreign key to User as UUID
+  user            User            @relation(fields: [userId], references: [id]) // Relation to User
+  items           Item[]                                  // Relation to items in the wishlist
+  createdAt       DateTime        @default(now())        // Auto-generated timestamp
+  updatedAt       DateTime        @updatedAt             // Auto-updated timestamp
 }
 
 model Item {
-  id          Int       @id @default(autoincrement()) // Unique item ID
-  name        String    // Name of the item
-  url         String?   // Optional link to the item
-  image       String?   // Optional image URL
-  description String?   // Optional description of the item
-  wishlistId  Int       // Foreign key to Wishlist
+  id          Int       @id @default(autoincrement())   // Unique item ID
+  name        String                                   // Name of the item
+  url         String?                                  // Optional link to the item
+  image       String?                                  // Optional image URL
+  description String?                                  // Optional description of the item
+  wishlistId  String                                   // Foreign key to Wishlist as UUID
   wishlist    Wishlist  @relation(fields: [wishlistId], references: [id]) // Relation to Wishlist
-  giftedById  Int?      // Foreign key to the User who gifted the item
+  giftedById  String?                                  // Foreign key to the User who gifted the item as UUID
   giftedBy    User?     @relation("GiftedItems", fields: [giftedById], references: [id]) // Relation to User
-  createdAt   DateTime  @default(now()) // Auto-generated timestamp
-  updatedAt   DateTime  @updatedAt // Auto-updated timestamp
+  createdAt   DateTime  @default(now())                 // Auto-generated timestamp
+  updatedAt   DateTime  @updatedAt                      // Auto-updated timestamp
 }

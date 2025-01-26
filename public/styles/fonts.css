@@ -1,0 +1,24 @@
+/* Coiny Font */
+@font-face {
+    font-family: "Coiny";
+    src: url("/fonts/Coiny/Coiny-Regular.ttf") format("truetype");
+    font-weight: 400; /* Regular weight only */
+    font-style: normal;
+  }
+  
+  /* Inter Variable Font */
+  @font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter/static/Inter-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900; /* Variable font weight range */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter/static/Inter-Italic-VariableFont_wght.ttf")
+      format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+  }
+  

@@ -7,12 +7,10 @@ const prisma = new PrismaClient();
 const itemIdSchema = z.object({
     item: z
         .string()
-        .nonempty("Item ID is required.")
-        .regex(/^[0-9]+$/, "Invalid item ID format."),
+        .nonempty("Item ID is required."),
     id: z
         .string()
         .nonempty("Wishlist ID is required.")
-        .regex(/^[0-9]+$/, "Invalid wishlist ID format."),
 });
 
 // Define Zod schema for item update validation
@@ -22,6 +20,7 @@ const itemUpdateSchema = z.object({
     image: z.string().url("Invalid image URL format.").optional(),
     description: z.string().optional(),
 });
+
 
 export default defineEventHandler({
     handler: async (event) => {
@@ -75,11 +74,11 @@ export default defineEventHandler({
 
             // Fetch all wishlists for the logged-in user
             const items = await prisma.item.findMany({
-                where: { wishlistId: +wishlistId },
+                where: { wishlistId: wishlistId },
             });
 
             const wishlist = await prisma.wishlist.findUnique({
-                where: { id: +wishlistId },
+                where: { id: wishlistId },
             });
 
             const isWishlistOwner = wishlist.userId === userId;

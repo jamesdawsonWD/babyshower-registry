@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
         // Fetch the wishlist based on the slug
         const wishlist = await prisma.wishlist.findUnique({
-            where: { id: +id },
+            where: { id: id },
             include: { items: true }, // Include related items
         });
 
@@ -63,6 +63,7 @@ export default defineEventHandler(async (event) => {
         const wishlistHtml = loadView("wishlist")({
             wishlist,
             isWishlistOwner,
+            userId
         });
 
         // Render the layout with the header and wishlist content

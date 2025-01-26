@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
   try {
     const { loggedIn, name: username } = await checkLoginStatus(event);
 
-    console.log(username);
     // Render the header with the loggedIn parameter
     const headerHtml = await loadTemplate("header")({
       loggedIn,

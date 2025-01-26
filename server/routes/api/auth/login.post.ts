@@ -31,6 +31,14 @@ export default defineEventHandler(async (event) => {
       return login;
     }
 
+    if (!user.isVerified) {
+      const verifyPinView = loadView("verify-pin")({
+        pinInputs: 6,
+      });
+
+      return verifyPinView;
+    }
+
     // Verify the password using Argon2
     const isPasswordValid = await argon2.verify(user.password, password);
 
@@ -61,8 +69,24 @@ export default defineEventHandler(async (event) => {
     ].join("; ");
 
     // Add the cookie to the response headers
-    setHeader(event, "Set-Cookie", `auth_token=${token}; ${cookieOptions}`);
-    setHeader(event, "HX-Redirect", "/");
+    appendHeader(event, "Set-Cookie", `auth_token=${token}; ${cookieOptions}`);
+
+    // Check for the `redirect` cookie
+    const redirectCookie = getCookie(event, "redirect");
+
+    if (redirectCookie) {
+      // Clear the redirect cookie
+      appendHeader(
+        event,
+        "Set-Cookie",
+        "redirect=; Path=/; HttpOnly; Secure; Max-Age=0",
+      );
+
+      // Redirect to the original destination
+      appendHeader(event, "HX-Redirect", decodeURIComponent(redirectCookie));
+      return;
+    }
+    appendHeader(event, "HX-Redirect", "/");
 
     return {
       success: true,

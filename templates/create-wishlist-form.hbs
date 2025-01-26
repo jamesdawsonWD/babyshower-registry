@@ -1,9 +1,9 @@
 
   <form
-    hx-post="/api/wishlists"
-    hx-target="#app"
+    hx-post="/htmx/wishlists/create"
+    hx-target="#wishlists-container"
     hx-swap="innerHTML"
-    class="space-y-6"
+    class="space-y-6 px-0"
   >
     <!-- Wishlist Name -->
     <div class="space-y-2 flex flex-col justify-start items-start">

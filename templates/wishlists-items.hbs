@@ -1,0 +1,55 @@
+ 
+{{#if items.length}}
+ <ul class=" space-y-4" >
+      {{#each items}}
+        <li class="p-8 flex justify-between rounded-lg border bg-white shadow-md border-zinc-200 items-start overflow-hidden relative flex-col">
+            <div class="flex  gap-2 items-start justify-between w-full">
+
+            <div class="flex flex-col gap-2 items-start justify-start">
+              <h2 class="text-2xl font-semibold text-zinc-800">{{this.name}}</h1>
+             
+            <p class="text-zinc-900 w-full text-left text-base max-w-[400px]">{{this.description}}</p>
+            <div class="flex flex-col lg:hidden gap-1 items-start justify-start  relative z-50">
+
+                <span class="text-zinc-800">Gifts for:</span>
+                <span class="font-semibold text-base text-zinc-800">
+                  {{#if (eq this.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
+                  {{#if (eq this.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
+                  {{#if (eq this.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
+                </span>
+            </div>
+            <!-- View Wishlist -->
+            <a
+              href="/wishlist/{{this.id}}"
+              hx-target="#app"
+              hx-push-url="/wishlist/{{this.id}}"
+              hx-get="/htmx/wishlist/{{this.id}}"
+              class="bg-zinc-800 hover:bg-zinc-900 hover:text-zinc-50 text-white py-1 px-3 rounded-md"
+            >
+              View
+            </a>
+            </div>
+            <div class="hidden lg:flex gap-2 flex-col relative z-50">
+
+                <span class="text-zinc-800">Gifts for:</span>
+                <span class="font-semibold text-2xl text-zinc-800">
+                  {{#if (eq this.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
+                  {{#if (eq this.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
+                  {{#if (eq this.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
+                </span>
+            </div>
+             <span
+                class="{{#if (eq this.lookingForGifts "BOYS")}}bg-blue-300{{/if}}
+                  {{#if (eq this.lookingForGifts "GIRLS")}}bg-pink-300{{/if}}
+                  {{#if (eq this.lookingForGifts "GENDER_NEUTRAL")}}bg-yellow-300{{/if}} px-4 py-2 w-[400px] h-[400px] rounded-full hidden lg:flex -right-20 -top-24 shadow-inner absolute  text-zinc-900  flex-col items-center justify-center"
+              >
+
+              </span>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="text-zinc-800 py-20">You have no wishlists yet. Create one below to get
+      started!</p>
+  {{/if}}

@@ -11,7 +11,6 @@ const slugSchema = z.object({
     id: z
         .string()
         .nonempty("Slug is required.")
-        .regex(/^[a-zA-Z0-9_-]+$/, "Invalid slug format."),
 });
 
 export default defineEventHandler(async (event) => {
@@ -29,7 +28,6 @@ export default defineEventHandler(async (event) => {
 
     const body = await readBody(event);
 
-    console.log(body);
     const parsedData = getItemDetailsBodySchema.safeParse(body);
     if (!parsedData.success) {
         const errors = parsedData.error.flatten().fieldErrors;

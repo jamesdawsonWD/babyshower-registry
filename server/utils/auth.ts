@@ -65,7 +65,6 @@ export function verifyToken(token: string, secret = JWT_SECRET) {
  */
 export async function checkLoginStatus(event, secret = JWT_SECRET) {
     const cookie = event.req.headers.cookie;
-    console.log("cookie", cookie);
 
     if (!cookie) {
         return {
@@ -78,8 +77,6 @@ export async function checkLoginStatus(event, secret = JWT_SECRET) {
         .split("; ")
         .find((row) => row.startsWith("auth_token="))
         ?.split("=")[1];
-
-    console.log("Token", token);
 
     if (!token) {
         return {
@@ -100,4 +97,31 @@ export async function checkLoginStatus(event, secret = JWT_SECRET) {
     const user = await getUserById(decoded.id);
 
     return { loggedIn: true, ...user };
+}
+
+/**
+ * Generates an authentication cookie with a JWT token.
+ * @param userId - The user's ID.
+ * @param userEmail - The user's email.
+ * @returns A string representing the cookie with the JWT token.
+ */
+export function generateAuthCookie(userId: number, userEmail: string): string {
+    // Generate a JWT token
+    const token = jwt.sign(
+        { email: userEmail, id: userId },
+        JWT_SECRET,
+        { expiresIn: "15m" }, // Token expires in 15 minutes
+    );
+
+    // Define cookie options
+    const cookieOptions = [
+        `HttpOnly`, // Prevent JavaScript access to the cookie
+        `Path=/`, // Make it available site-wide
+        `Secure`, // Use HTTPS in production
+        `SameSite=Strict`, // Prevent cross-site request forgery (CSRF)
+        `Max-Age=3600`, // Expire after 1 hour
+    ].join("; ");
+
+    // Return the cookie string
+    return `auth_token=${token}; ${cookieOptions}`;
 }

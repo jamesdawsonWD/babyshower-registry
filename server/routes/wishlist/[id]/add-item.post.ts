@@ -17,8 +17,7 @@ const addItemBodySchema = z.object({
 const slugSchema = z.object({
     id: z
         .string()
-        .nonempty("Slug is required.")
-        .regex(/^[a-zA-Z0-9_-]+$/, "Invalid slug format."),
+        .nonempty("Slug is required."),
 });
 
 export default defineEventHandler({
@@ -78,7 +77,7 @@ export default defineEventHandler({
                     url,
                     image: imageUrl,
                     description,
-                    wishlistId: +id,
+                    wishlistId: id,
                 },
             });
 

@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import jwt from "jsonwebtoken";
 import { Resend } from "resend";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY);
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"; // Replace with a secure key in production
-const MAGIC_LINK_URL = process.env.MAGIC_LINK_URL ||
-    "https://your-app.com/auth/magic";
+
+// Function to generate a 6-digit verification code
+function generateVerificationCode() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 export default defineEventHandler(async (event) => {
     try {
@@ -55,55 +56,37 @@ export default defineEventHandler(async (event) => {
         // Hash the password (even if unused in magic link, for future-proofing)
         const argon2 = await import("argon2");
         const hashedPassword = await argon2.hash(password);
+        const verificationCode = generateVerificationCode();
 
         // Create the new user
-        const newUser = await prisma.user.create({
+        await prisma.user.create({
             data: {
                 email,
                 password: hashedPassword,
                 name: username,
+                verificationCode,
+                isVerified: false, // User is not verified yet
             },
         });
 
-        // Generate a JWT token for the magic link
-        const token = jwt.sign(
-            { email: newUser.email, id: newUser.id },
-            JWT_SECRET,
-            { expiresIn: "15m" }, // Token expires in 15 minutes
-        );
-
-        // Construct the magic link
-        const magicLink = `${MAGIC_LINK_URL}?token=${token}`;
-
         // Send the magic link via email
-        await resend.emails.send({
-            from: "hello@jamesdawson.build", // Replace with your sender address
+        const response = await resend.emails.send({
+            from: "hello@jamesdawson.dev", // Replace with your sender address
             to: email,
             subject: "Complete Your Signup",
-            html:
-                `<p>Welcome! Click the link below to verify your email and complete your signup:</p>
-             <p><a href="${magicLink}">Complete Signup</a></p>
-             <p>If you didn't sign up, you can ignore this email.</p>`,
+            html: `<p>Welcome! Here is your verification code:</p>
+             <h1>${verificationCode}</h1>`,
         });
 
-        const cookieOptions = [
-            `HttpOnly`, // Prevent JavaScript access to the cookie
-            `Path=/`, // Make it available site-wide
-            `Secure`, // Use HTTPS in production
-            `SameSite=Strict`, // Prevent cross-site request forgery (CSRF)
-            `Max-Age=3600`, // Expire after 1 hour
-          ].join("; ");
-      
+        if (response.error) {
+            console.log(response.error);
+        }
 
-        // Add the cookie to the response headers
-        setHeader(event, "Set-Cookie", `auth_token=${token}; ${cookieOptions}`);
-        setHeader(event, "HX-Redirect", "/");
+        const verifyPinView = loadView("verify-pin")({
+            pinLength: 6,
+        });
 
-        return {
-            success: true,
-            message:
-                "Signup successful. Please check your email to complete the process.",
-        };
+        return verifyPinView;
     } catch (error) {
         console.error("Error during signup:", error);
         return {

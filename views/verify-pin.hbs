@@ -1,0 +1,156 @@
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+  <!-- Title -->
+  <h1 class="text-2xl font-semibold text-center text-zinc-900 mb-2">Verify PIN</h1>
+  <p class="text-center text-sm text-gray-500 mb-6">Enter the 6-digit code sent to your email.</p>
+
+  <!-- Error Message (only shown if errorMessage is passed) -->
+  {{#if errorMessage}}
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-6 text-sm">
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
+  <!-- PIN Input Fields -->
+<form hx-post="/api/auth/verify" hx-target="#app" hx-swap="innerHTML" class="space-y-4">
+
+    <div class="flex justify-between gap-2">
+      <!-- Input 1 -->
+      <input
+        type="text"
+        id="pin-1"
+        name="pin[]"
+        maxlength="1"
+        inputmode="numeric"
+        pattern="\d*"
+        class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+        oninput="handlePinInput(event, 1)"
+        onpaste="handlePinPaste(event)"
+      />
+      <!-- Input 2 -->
+      <input
+        type="text"
+        id="pin-2"
+        name="pin[]"
+        maxlength="1"
+        inputmode="numeric"
+        pattern="\d*"
+        class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+        oninput="handlePinInput(event, 2)"
+        onpaste="handlePinPaste(event)"
+      />
+      <!-- Input 3 -->
+      <input
+        type="text"
+        id="pin-3"
+        name="pin[]"
+        maxlength="1"
+        inputmode="numeric"
+        pattern="\d*"
+        class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+        oninput="handlePinInput(event, 3)"
+        onpaste="handlePinPaste(event)"
+      />
+      <!-- Input 4 -->
+      <input
+        type="text"
+        id="pin-4"
+        name="pin[]"
+        maxlength="1"
+        inputmode="numeric"
+        pattern="\d*"
+        class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+        oninput="handlePinInput(event, 4)"
+        onpaste="handlePinPaste(event)"
+      />
+      <!-- Input 5 -->
+      <input
+        type="text"
+        id="pin-5"
+        name="pin[]"
+        maxlength="1"
+        inputmode="numeric"
+        pattern="\d*"
+        class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+        oninput="handlePinInput(event, 5)"
+        onpaste="handlePinPaste(event)"
+      />
+      <!-- Input 6 -->
+      <input
+        type="text"
+        id="pin-6"
+        name="pin[]"
+        maxlength="1"
+        inputmode="numeric"
+        pattern="\d*"
+        class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
+        oninput="handlePinInput(event, 6)"
+        onpaste="handlePinPaste(event)"
+      />
+    </div>
+
+    <!-- Verify Button -->
+    <button
+      type="submit"
+      class="w-full bg-zinc-800 hover:bg-zinc-900 text-white py-2 px-4 rounded-md shadow"
+    >
+      Verify
+    </button>
+  </form>
+
+  <!-- Footer -->
+  <p class="text-center text-sm text-gray-500 mt-4">
+    Didn't receive the code?
+    <a
+      hx-target="#app"
+      hx-push-url="/resend-pin"
+      hx-get="/htmx/resend-pin"
+      class="text-blue-500 hover:underline hover:cursor-pointer"
+    >Resend</a>
+  </p>
+<!-- JavaScript for PIN Functionality -->
+<script>
+ function handlePinInput(event, currentIndex) {
+  const input = event.target;
+  const value = input.value;
+
+  // Ensure only numbers are entered
+  if (!/^\d*$/.test(value)) {
+    input.value = "";
+    return;
+  }
+
+  // Auto-focus the next input
+  if (value.length === 1 && currentIndex < 6) {
+    const nextInput = document.getElementById(`pin-${currentIndex + 1}`);
+    if (nextInput) nextInput.focus();
+  }
+
+  // Trigger htmx form submission when all inputs are filled
+  const inputs = document.querySelectorAll('input[name="pin[]"]');
+  const allFilled = Array.from(inputs).every((input) => input.value.length === 1);
+
+  if (allFilled) {
+    const form = input.closest("form");
+    if (form) {
+      // Trigger htmx to submit the form
+      htmx.trigger(form, "submit");
+    }
+  }
+}
+  // Handle pasting a PIN
+  function handlePinPaste(event) {
+    const pasteData = event.clipboardData.getData("text");
+    const inputs = document.querySelectorAll('input[name="pin[]"]');
+
+    // Only proceed if the pasted data is 6 digits
+    if (/^\d{6}$/.test(pasteData)) {
+      inputs.forEach((input, index) => {
+        input.value = pasteData[index] || "";
+      });
+
+      // Focus the last input
+      inputs[5].focus();
+    }
+  }
+</script>
+</div>

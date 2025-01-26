@@ -7,12 +7,10 @@ const prisma = new PrismaClient();
 const itemIdSchema = z.object({
     item: z
         .string()
-        .nonempty("Item ID is required.")
-        .regex(/^[0-9]+$/, "Invalid item ID format."),
+        .nonempty("Item ID is required."),
     id: z
         .string()
         .nonempty("Wishlist ID is required.")
-        .regex(/^[0-9]+$/, "Invalid wishlist ID format."),
 });
 
 export default defineEventHandler({
@@ -52,18 +50,18 @@ export default defineEventHandler({
 
             // Fetch the wishlist based on the slug
             const wishlist = await prisma.wishlist.findUnique({
-                where: { id: +wishlistId },
+                where: { id: wishlistId },
             });
 
             const wishlistsTemplate = loadTemplate("wishlist-items");
 
             const wishlists = await prisma.item.findMany({
-                where: { wishlistId: +wishlistId },
+                where: { wishlistId: wishlistId },
             });
 
             const isWishlistOwner = wishlist.userId === userId;
 
-            return wishlistsTemplate({ items: wishlists, isWishlistOwner });
+            return wishlistsTemplate({ items: wishlists, isWishlistOwner, userId });
         } catch (error) {
             console.error("Error deleting item:", error);
             return {

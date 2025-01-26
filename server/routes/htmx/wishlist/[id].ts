@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
         // Fetch the wishlist based on the slug
         const wishlist = await prisma.wishlist.findUnique({
-            where: { id: +id },
+            where: { id: id },
             include: { items: true }, // Include related items
         });
 
@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
         return loadView("wishlist")({
             wishlist,
             isWishlistOwner,
+            userId,
         });
     } catch (error) {
         console.error("Error serving wishlist:", error);

@@ -3,7 +3,7 @@
     <ul class="flex flex-col gap-6">
       {{#each items}}
         <li
-          class="bg-gray-50 p-4 flex gap-4 rounded-md shadow-sm border border-gray-200"
+          class="bg-white shadow-md p-8 flex lg:flex-row flex-col gap-4 rounded-md border border-gray-200 {{#if this.giftedById}}opacity-50{{/if}}"
         >
           <img
             src="{{this.image}}"
@@ -34,7 +34,7 @@
                   hx-get="/htmx/ui/{{wishlistId}}/{{this.id}}/edit-item-modal"
                    hx-target="#modalContainer"
                   hx-swap="innerHTML"
-                  class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md"
+                  class="bg-zinc-200 hover:bg-zinc-300 text-zinc-800 py-1 px-3 rounded-md"
                 >
                   Edit
                 </button>
@@ -49,20 +49,45 @@
                 </button>
               {{/if}}
               </div>
-  <!-- Gift Item -->
-              <button
-                hx-post="/wishlist/{{wishlistId}}/items/{{this.id}}/gift"
-                hx-target="this"
-                hx-swap="outerHTML"
-                class="{{ternary
-                    this.giftedById
-                    'bg-zinc-500 hover:bg-zinc-600'
-                    'bg-blue-500 hover:bg-blue-600 text-white'
-                  }}
-                  py-1 px-3 rounded-md justify-self-end"
-              >
-                {{ternary this.giftedById "Undo gift selection" "Gift Item"}}
-              </button>
+              {{#if (eq this.giftedById ../userId)}}
+                <!-- Undo Gift Selection -->
+                <button
+                  hx-post="/wishlist/{{wishlistId}}/items/{{this.id}}/gift"
+                  hx-target="#wishlist-container"
+                  hx-swap="innerHTML"
+                  class="bg-zinc-800 hover:bg-zinc-900 text-white py-1 px-3 rounded-md justify-self-end flex gap-2 items-center"
+                >
+                  <div class="size-6 text-zinc-400 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/>
+                    </svg>
+                  </div>
+                  Undo Gift Selection
+                </button>
+              {{else}}
+                {{#if this.giftedById}}
+                  <!-- Gift Selected (Non-clickable) -->
+                  <div class="py-1 px-3 rounded-md justify-self-end flex gap-2 items-center bg-zinc-500 text-white">
+                    Gift Selected
+                  </div>
+                {{else}}
+                  <!-- Gift Item -->
+                  <button
+                    hx-post="/wishlist/{{wishlistId}}/items/{{this.id}}/gift"
+                    hx-target="#wishlist-container"
+                    hx-swap="innerHTML"
+                    class="bg-zinc-800 hover:bg-zinc-900 text-white py-1 px-3 rounded-md justify-self-end flex gap-2 items-center"
+                  >
+                    Gift Item
+                    <div class="size-6 text-pink-400 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/>
+                      </svg>
+                    </div>
+                  </button>
+                {{/if}}
+              {{/if}}
+
             </div>
           </div>
         </li>

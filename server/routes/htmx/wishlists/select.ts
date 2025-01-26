@@ -15,7 +15,5 @@ export default defineEventHandler(async (event) => {
     // Mark the item as selected
     selectedItems[productId] = true;
 
-    console.log("Selected items:", selectedItems);
-
     return '<div id="modal-container"></div>';
 });

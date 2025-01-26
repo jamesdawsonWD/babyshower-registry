@@ -1,52 +1,58 @@
-<div class="min-h-screen bg-gradient-to-b from-blue-50 to-pink-50">
+<div class="min-h-screen bg-zinc-50 text-zinc-800">
   <!-- Hero Section -->
-  <header class="relative h-1/2">
-    <div class="max-w-7xl mx-auto px-4 py-12 lg:py-20">
-      <div class="lg:flex lg:items-center lg:justify-between">
-        <!-- Left Content -->
-        <div class="lg:w-1/2">
-          <h1 class="text-4xl lg:text-6xl font-bold text-pink-500 leading-tight">
-            Create Your Baby’s Wishlist Today!
-          </h1>
-          <p class="mt-4 text-lg text-zinc-700">
-            Simplify gifting with a personalized wishlist for your little one. Share it with loved ones and ensure you get exactly what you need.
-          </p>
-          <div class="mt-6">
-            <a
-              href="/wishlist/create"
-              class="inline-block bg-blue-300 hover:bg-blue-400 text-white font-medium text-lg py-3 px-6 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200"
-            >
-              Create Your Wishlist
-            </a>
-          </div>
+  <header class="relative bg-zinc-900 text-zinc-50 overflow-hidden rounded-lg">
+    <div class="max-w-7xl mx-auto px-6 py-16 lg:py-24 relative">
+      <!-- Left Content -->
+      <div class="lg:w-1/2 relative z-10">
+        <h1 class="text-4xl lg:text-6xl font-bold leading-tight">
+          Your Baby's Wishlist, Simplified.
+        </h1>
+        <p class="mt-6 text-lg lg:text-xl text-zinc-300">
+          A thoughtful way to share what your baby truly needs with your loved
+          ones. Organize, share, and simplify gifting effortlessly.
+        </p>
+        <div class="mt-8">
+          <a
+            href="/wishlists"
+            hx-target="#app"
+            hx-push-url="/wishlists"
+            hx-get="/htmx/wishlists"
+            class="hover:bg-zinc-100 bg-zinc-200 !text-zinc-800 py-4 px-8 rounded-lg hover:cursor-pointer transition-all"
+          >
+            Create Your Wishlist
+          </a>
         </div>
-        <!-- Right Content -->
-        <div class="lg:w-1/2 mt-8 lg:mt-0">
-          <img
-            src="https://via.placeholder.com/600x400" <!-- Replace with a baby image URL -->
-            alt="Baby Image"
-            class="rounded-lg shadow-lg mx-auto"
-          />
-        </div>
+      </div>
+
+      <!-- Right Content -->
+      <div class="absolute -top-28 right-0 lg:right-[-40%]">
+        <img
+          src="/images/baby.jpg"
+          alt="Baby Wishlist"
+          class="w-[1500px] max-w-none aspect-auto"
+        />
       </div>
     </div>
   </header>
-
   <!-- Features Section -->
-  <section class="bg-yellow-200 py-12 h-1/2">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-zinc-800 text-center">
-        Why Choose Baby Wishlist?
+  <section class="py-20 bg-zinc-100">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold">
+        Why Choose Our Baby Wishlist?
       </h2>
-      <p class="mt-4 text-lg text-zinc-700 text-center">
-        Designed to make gifting stress-free and joyful.
+      <p class="mt-4 text-lg text-zinc-600">
+        Thoughtfully crafted to make life simpler for parents and gift-givers.
       </p>
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
         <!-- Feature 1 -->
-        <div class="flex flex-col items-center text-center">
-          <div class="p-4 bg-pink-300 rounded-full shadow-md">
+        <div
+          class="bg-zinc-50 p-8 rounded-lg shadow-md hover:shadow-lg transition"
+        >
+          <div
+            class="p-4 bg-zinc-900 rounded-full mx-auto flex items-center justify-center w-16 h-16"
+          >
             <svg
-              class="h-8 w-8 text-white"
+              class="h-8 w-8 text-zinc-50"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -60,16 +66,20 @@
               />
             </svg>
           </div>
-          <h3 class="mt-4 text-lg font-semibold text-zinc-800">Personalized</h3>
-          <p class="mt-2 text-sm text-zinc-600">
-            Tailor your wishlist to fit your baby’s unique needs.
+          <h3 class="mt-6 text-xl font-semibold">Personalized Lists</h3>
+          <p class="mt-4 text-zinc-600">
+            Create a wishlist tailored to your baby's needs.
           </p>
         </div>
         <!-- Feature 2 -->
-        <div class="flex flex-col items-center text-center">
-          <div class="p-4 bg-blue-300 rounded-full shadow-md">
+        <div
+          class="bg-zinc-50 p-8 rounded-lg shadow-md hover:shadow-lg transition"
+        >
+          <div
+            class="p-4 bg-zinc-900 rounded-full mx-auto flex items-center justify-center w-16 h-16"
+          >
             <svg
-              class="h-8 w-8 text-white"
+              class="h-8 w-8 text-zinc-50"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -83,16 +93,20 @@
               />
             </svg>
           </div>
-          <h3 class="mt-4 text-lg font-semibold text-zinc-800">Easy Sharing</h3>
-          <p class="mt-2 text-sm text-zinc-600">
-            Share your wishlist link with friends and family.
+          <h3 class="mt-6 text-xl font-semibold">Easy Sharing</h3>
+          <p class="mt-4 text-zinc-600">
+            Share your wishlist seamlessly with friends and family.
           </p>
         </div>
         <!-- Feature 3 -->
-        <div class="flex flex-col items-center text-center">
-          <div class="p-4 bg-yellow-300 rounded-full shadow-md">
+        <div
+          class="bg-zinc-50 p-8 rounded-lg shadow-md hover:shadow-lg transition"
+        >
+          <div
+            class="p-4 bg-zinc-900 rounded-full mx-auto flex items-center justify-center w-16 h-16"
+          >
             <svg
-              class="h-8 w-8 text-white"
+              class="h-8 w-8 text-zinc-50"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -106,9 +120,9 @@
               />
             </svg>
           </div>
-          <h3 class="mt-4 text-lg font-semibold text-zinc-800">Stress-Free Gifting</h3>
-          <p class="mt-2 text-sm text-zinc-600">
-            Ensure loved ones know exactly what to get for your baby.
+          <h3 class="mt-6 text-xl font-semibold">Stress-Free Gifting</h3>
+          <p class="mt-4 text-zinc-600">
+            Let your loved ones know exactly what to get.
           </p>
         </div>
       </div>
@@ -116,20 +130,42 @@
   </section>
 
   <!-- CTA Section -->
-  <section class="bg-pink-300 py-12 h-1/2">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold text-white">Start Your Wishlist Today!</h2>
-      <p class="mt-4 text-lg text-pink-100">
-        Join countless parents in simplifying the gifting process.
+  <section class="py-20 bg-zinc-900 text-zinc-50">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold">Get Started Today</h2>
+      <p class="mt-4 text-lg text-zinc-300">
+        Start your journey to a more organized and thoughtful gifting process.
       </p>
-      <div class="mt-6">
+      <div class="mt-8">
         <a
           href="/wishlist/create"
-          class="bg-white hover:bg-pink-50 text-pink-500 font-medium text-lg py-3 px-6 rounded-md shadow-md"
+          class="bg-zinc-50 hover:bg-zinc-200 text-zinc-900 font-medium text-lg py-3 px-8 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-zinc-500"
         >
-          Create Your Wishlist Now
+          Create Your Wishlist
         </a>
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-zinc-50 border-t border-zinc-200">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <a
+        href="/"
+        hx-target="#app"
+        hx-push-url="/"
+        hx-get="/htmx/landing-page"
+        class="text-2xl font-semibold font-coiny text-zinc-900"
+        role="link"
+        aria-label="Go to wishly landing page"
+      >
+        wishly
+      </a>
+      <p class="mt-4 text-zinc-600 text-sm">
+        ©
+        {{year}}
+        wishly. All rights reserved.
+      </p>
+    </div>
+  </footer>
 </div>

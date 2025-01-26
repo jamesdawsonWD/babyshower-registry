@@ -15,6 +15,14 @@ export function registerPartials() {
         return condition ? trueValue : falseValue;
     });
 
+    Handlebars.registerHelper("range", function (start, end, options) {
+        let result = "";
+        for (let i = start; i <= end; i++) {
+            result += options.fn(i);
+        }
+        return result;
+    });
+
     files.forEach((file) => {
         if (file.endsWith(".hbs")) {
             const partialName = path.basename(file, ".hbs"); // Extract file name without extension

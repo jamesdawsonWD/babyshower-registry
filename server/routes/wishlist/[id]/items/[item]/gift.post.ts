@@ -6,12 +6,10 @@ const prisma = new PrismaClient();
 const itemIdSchema = z.object({
     item: z
         .string()
-        .nonempty("Item ID is required.")
-        .regex(/^[0-9]+$/, "Invalid item ID format."),
+        .nonempty("Item ID is required."),
     id: z
         .string()
-        .nonempty("Wishlist ID is required.")
-        .regex(/^[0-9]+$/, "Invalid wishlist ID format."),
+        .nonempty("Wishlist ID is required."),
 });
 
 export default defineEventHandler({
@@ -34,10 +32,22 @@ export default defineEventHandler({
             const { loggedIn, id: userId } = await checkLoginStatus(event);
 
             if (!loggedIn || !userId) {
+                // Store the original URL in a cookie
+                const redirectUrl = `/wishlist/${wishlistId}`;
+                setHeader(
+                    event,
+                    "Set-Cookie",
+                    `redirect=${
+                        encodeURIComponent(
+                            redirectUrl,
+                        )
+                    }; Path=/; HttpOnly; Secure`,
+                );
+
+                // Redirect to login page
                 setHeader(event, "HX-Redirect", "/login");
                 return;
             }
-
             // Fetch the item from the database
             const item = await prisma.item.findUnique({
                 where: {
@@ -71,25 +81,24 @@ export default defineEventHandler({
                 },
             });
 
-            // Determine the button text and classes based on the updated state
-            const buttonText = updatedItem.giftedById
-                ? "Undo gift selection"
-                : "Gift Item";
-            const buttonClasses = updatedItem.giftedById
-                ? "bg-zinc-500 hover:bg-zinc-600"
-                : "bg-blue-500 hover:bg-blue-600";
+            // Fetch the wishlist based on the slug
+            const wishlist = await prisma.wishlist.findUnique({
+                where: { id: wishlistId },
+            });
 
-            // Return the updated button HTML
-            return `
-            <button
-                hx-post="/wishlist/${wishlistId}/items/${itemId}/gift"
-                hx-target="this"
-                hx-swap="outerHTML"
-                class="${buttonClasses} text-white py-1 px-3 rounded-md"
-            >
-                ${buttonText}
-            </button>
-            `;
+            const wishlistsTemplate = loadTemplate("wishlist-items");
+
+            const wishlists = await prisma.item.findMany({
+                where: { wishlistId: wishlistId },
+            });
+
+            const isWishlistOwner = wishlist.userId === userId;
+
+            return wishlistsTemplate({
+                items: wishlists,
+                isWishlistOwner,
+                userId,
+            });
         } catch (error) {
             console.error("Error updating gifted status:", error);
             return {

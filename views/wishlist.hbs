@@ -1,6 +1,6 @@
-  {{#if isWishlistOwner}}
   <div class="flex items-start justify-between mb-4 w-full max-w-4xl gap-4 mx-auto">
 
+    {{#if isWishlistOwner}}
     <a
       href="/wishlists"
       hx-target="#app"
@@ -10,13 +10,17 @@
     >
       Back to Wishlists
     </a>
+        {{/if}}
+
     <div class="flex gap-2 items-center">
 
-      <button
+    {{#if isWishlistOwner}}
+
+    <button
       hx-get="/htmx/ui/{{wishlistId}}/{{this.id}}/edit-item-modal"
-        hx-target="#modalContainer"
+      hx-target="#modalContainer"
       hx-swap="innerHTML"
-      class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md"
+      class="bg-zinc-200 hover:bg-zinc-300 text-zinc-800 py-1 px-3 rounded-md"
     >
       Edit
     </button>
@@ -29,6 +33,7 @@
     >
       Delete
     </button>
+    {{/if}}
     <button class="text-zinc-800  px-3 rounded-md bg-zinc-100 hover:bg-zinc-200 hover:border-zinc-500"
           hx-get="/htmx/ui/{{wishlist.id}}/share-wishlist-modal"
           hx-swap="innerHTML"
@@ -38,36 +43,48 @@
     </div>
 
   </div>
-  {{/if}}
 <div class="grid grid-cols-12 w-full max-w-4xl gap-4 mx-auto">
-  <div class="w-full p-8 bg-white rounded-lg shadow-md col-span-12 overflow-hidden">
-    <!-- Header Section -->
-    <header class="flex flex-col gap-2 ">
-      <div class="flex justify-between w-full relative ">
+   <div class="p-8 mb-8 col-span-12 flex justify-between rounded-lg border bg-white shadow-md border-zinc-200 items-start overflow-hidden relative flex-col">
+            <div class="flex  gap-2 items-start justify-between w-full">
 
-        <h1 class="text-4xl font-bold text-zinc-800">{{wishlist.name}}</h1>
-        <span
-          class="{{#if (eq wishlist.lookingForGifts "BOYS")}}bg-blue-300{{/if}}
-            {{#if (eq wishlist.lookingForGifts "GIRLS")}}bg-pink-300{{/if}}
-            {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}bg-yellow-300{{/if}} px-4 py-2 w-[400px] h-[400px] rounded-full -right-20 -top-24 shadow-inner absolute  text-zinc-900 flex flex-col items-center justify-center"
-        >
-          <span class="text-sinc-600">Gifts for:</span>
-          <span class="font-semibold text-2xl ">
-            {{#if (eq wishlist.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
-            {{#if (eq wishlist.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
-            {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
-          </span>
+            <div class="flex flex-col gap-2 items-start justify-start">
+              <h2 class="text-2xl font-semibold text-zinc-800">{{wishlist.name}}</h1>
+             
+            <p class="text-zinc-900 w-full text-left text-base max-w-[400px]">{{wishlist.description}}</p>
+            <div class="flex flex-col lg:hidden gap-1 items-start justify-start  relative z-50">
 
-        </span>
-      </div>
-      <p class="text-zinc-900 w-full text-left text-base max-w-[600px]">{{wishlist.description}}</p>
+                <span class="text-zinc-800">Gifts for:</span>
+                <span class="font-semibold text-base text-zinc-800">
+                  {{#if (eq wishlist.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
+                  {{#if (eq wishlist.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
+                  {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
+                </span>
+            </div>
+    
+            </div>
+            <div class="hidden lg:flex gap-2 flex-col relative z-50">
 
-    </header>
+                <span class="text-zinc-800">Gifts for:</span>
+                <span class="font-semibold text-2xl text-zinc-800">
+                  {{#if (eq wishlist.lookingForGifts "BOYS")}}A Baby Boy{{/if}}
+                  {{#if (eq wishlist.lookingForGifts "GIRLS")}}A Baby Girl{{/if}}
+                  {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}Gender Neutral{{/if}}
+                </span>
+            </div>
+             <span
+                class="{{#if (eq wishlist.lookingForGifts "BOYS")}}bg-blue-300{{/if}}
+                  {{#if (eq wishlist.lookingForGifts "GIRLS")}}bg-pink-300{{/if}}
+                  {{#if (eq wishlist.lookingForGifts "GENDER_NEUTRAL")}}bg-yellow-300{{/if}} px-4 py-2 w-[400px] h-[400px] rounded-full hidden lg:flex -right-20 -top-24 shadow-inner absolute  text-zinc-900  flex-col items-center justify-center"
+              >
+              </span>
+        </div>
   </div>
   <!-- Items Section -->
-  <div class="mb-8 col-span-12 w-full p-8 bg-white rounded-lg shadow-md">
+  <div class="mb-8 col-span-12 w-full">
     <div class="flex justify-between w-full items-center mb-4">
       <h2 class="text-xl font-semibold text-left text-zinc-800 w-full">Wishlist Items</h2>
+      {{#if isWishlistOwner}}
+
       <button
         type="submit"
         hx-get="/htmx/ui/{{wishlist.id}}/get-item-details-modal"
@@ -78,8 +95,10 @@
       >
         Add item
       </button>
+      {{/if}}
+
     </div >
-    {{> wishlist-items items=wishlist.items wishlistId=wishlist.id isWishlistOwner=isWishlistOwner}}
+    {{> wishlist-items items=wishlist.items wishlistId=wishlist.id isWishlistOwner=isWishlistOwner userId=userId}}
     </div>
  
   </div>
