@@ -2,7 +2,7 @@ services:
   - type: web
     name: nitro-app
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: pnpm install && pnpm run build
     startCommand: npm start
     plan: free
     envVars:
